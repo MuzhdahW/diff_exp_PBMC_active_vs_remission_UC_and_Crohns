@@ -1,0 +1,2 @@
+This is a .txt file I created so to preserve the project structure. I stored the downloaded .rds file into a data
+folder in my project setup, but did not want the actual .rds on the repo. 

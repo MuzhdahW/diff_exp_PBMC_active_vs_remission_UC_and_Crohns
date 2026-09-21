@@ -27,3 +27,16 @@ pbmc_complete_rows <- rownames(pbmc_rds@meta.data)[complete.cases(pbmc_rds@meta.
 cleaned_pbmc <- subset(pbmc_rds,cells=pbmc_complete_rows)
 # now swe split the data based on ulcerative_colitis(UC) or crohns(CD). We will then compare active vs remission
 # disease
+
+
+
+# 2. Get Crohn's rows by checking for barcodes that contain "CD" and then subsetting the rds file based on those 
+pbmc_crohns_rows <- rownames(cleaned_pbmc@meta.data)[grepl("CD", cleaned_pbmc@meta.data$barcode)]
+crohns_subset <- subset(cleaned_pbmc, cells = pbmc_crohns_rows)
+
+# 3. Get UC rows the same way
+pbmc_uc_rows <- rownames(cleaned_pbmc@meta.data)[grepl("UC", cleaned_pbmc@meta.data$barcode)]
+uc_subset <- subset(cleaned_pbmc, cells = pbmc_uc_rows)
+
+
+

@@ -21,7 +21,7 @@ library(tibble)
 # geoquery did not exist for the newest version of R, so I decided to just load the file from my local machine
 #pbmc_rds <- readRDS(url("https://ftp.ncbi.nlm.nih.gov/geo/series/GSE330nnn/GSE330122/matrix/"))
 #Finding differentially expressed features 
-data_file <- "diff_exp_of_PBMCs_in_IBD_patients_UC_patients_and_healthy_controls/data/GSE330122_integrated_seurat_object_all12donors.rds"
+data_file <- "./data/GSE330122_integrated_seurat_object_all12donors.rds"
 pbmc_rds <- readRDS(data_file)
 
 # let's clear out the bad reads by removing the NA's. We are looking at the names of the rows in the meta.data table that are complete
@@ -72,3 +72,5 @@ copy_crohns@meta.data <- copy_crohns@meta.data %>%
   mutate(status = if_else(grepl('Active',barcode),"active","remission")) %>%
   column_to_rownames(var = "cell_barcodes")
 
+# staying w the copy data set for now, in case I goofed
+crohns_markers<- FindMarkers(copy_crohns,ident.1=0,ident.2=1,group.by='status')

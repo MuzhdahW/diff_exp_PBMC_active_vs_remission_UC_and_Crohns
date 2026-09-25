@@ -71,6 +71,37 @@ copy_crohns@meta.data <- copy_crohns@meta.data %>%
   rownames_to_column(var = "cell_barcodes")%>% 
   mutate(status = if_else(grepl('Active',barcode),"active","remission")) %>%
   column_to_rownames(var = "cell_barcodes")
-
+# I hypothesize that there will be more expression activity in the "active" disease group than the "remission" group 
 # staying w the copy data set for now, in case I goofed
-crohns_markers<- FindMarkers(copy_crohns,ident.1=0,ident.2=1,group.by='status')
+# when I ran level() I got factors 0 to 9 but when I checked the number of Suerat clusters I got 
+# 0 to 12 so I'm going to explicitly set the idents 
+Idents(copy_crohns) <- "seurat_clusters"
+Idents(copy_uc) <- "seurat_clusters"
+# make a list of idents to loop through 
+listed_idents <- c("0","1","2", "3","4","5","6","7","8","9","10","11","12")
+# function where I loop through the idents , changing the subset.ident value and adding to a list
+get_crohns_markers <- function(listed_idents){
+  crohns_markers_list <- list()
+  for (p in listed_idents){
+    crohns_marker<- FindMarkers(copy_crohns,
+                                ident.1="active",
+                                 ident.2="remission",
+                                 group.by="status",
+                                 subset.ident = p )
+    crohns_markers_list[[p]] <- crohns_marker
+  }
+  return(crohns_markers_list)
+}
+
+get_uc_markers <- function(listed_idents){
+  uc_markers_list <- list()
+  for (p in listed_idents){
+    uc_marker<- FindMarkers(copy_uc,
+                                ident.1="active",
+                                ident.2="remission",
+                                group.by="status",
+                                subset.ident = p )
+    uc_markers_list[[p]] <- uc_marker
+  }
+  return(uc_markers_list)
+}

@@ -11,6 +11,8 @@ install.packages("dplyr")
 library(dplyr)
 install.packages("tibble")
 library(tibble)
+install.packages('BiocManager')
+BiocManager::install('EnhancedVolcano')
 #devtools::install_github("immunogenomics/presto")
 #install.packages("presto")
 #library(presto)
@@ -105,3 +107,23 @@ get_uc_markers <- function(listed_idents){
   }
   return(uc_markers_list)
 }
+#
+ #p_val_adj (Adjusted P-value / Bonferroni/FDR):• The most important metric for significance. It corrects the raw p-value for multiple hypothesis testing using methods like Bonferroni correction (default in Seurat) or Benjamini-Hochberg.
+ #Lower values mean higher statistical confidence that the difference is real and not random noise.
+#A value of 1 means a 2-fold increase (2¹); -1 means a 2-fold decrease. High absolute log2FC means a massive expression shift, but it must be paired with a good p_val_adj to be statistically trustworthy.
+final_results_list_crohns <- get_crohns_markers(listed_idents)
+final_results_list_uc <- get_uc_markers(listed_idents)
+
+
+# All of the output tables are giving results that are remarkably similar. Likely because during active disease, 
+# cells across the immune system are all activated. Below I have two volcano plots. What I did  is  I selected a single Seurat cluster
+# from each disease list. 
+
+# Crohn's disease cluster 3
+crohns_cluster_3 <- final_results_list_crohns[3]
+EnhancedVolcano(crohns_cluster_3,
+                lab = c(""),
+                x = 'log2FoldChange',
+                y = 'pvalue')
+
+# UC cluster 5 

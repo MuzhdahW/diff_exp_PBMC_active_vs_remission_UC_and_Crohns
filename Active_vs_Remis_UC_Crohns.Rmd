@@ -1,0 +1,41 @@
+---
+title: "Active_vs_Remission_UC_Crohns"
+output: html_document
+date: "2026-10-15"
+---
+
+```{r setup, include=FALSE,message=FALSE,warning=FALSE,echo=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("dplyr")
+library(dplyr)
+#install.packages("Matrix")
+library(Matrix)
+#install.packages("Seurat")
+library(Seurat)
+#install.packages("patchwork")
+library(patchwork)
+#install.packages("devtools")
+#install.packages("dplyr")
+library(dplyr)
+#install.packages("tibble")
+library(tibble)
+#install.packages('BiocManager')
+#BiocManager::install('EnhancedVolcano')
+library(EnhancedVolcano)
+```
+
+### Data Ingest  
+
+```{r Read in the Datafile and Remove Incomplete Rows}
+summary(cars)
+```
+
+### Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
